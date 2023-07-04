@@ -1,0 +1,50 @@
+<h1>Welcome to the Lobby!</h1>
+
+<% if current_user %>
+ <script type="text/javascript">
+    window.location.href = "<%= waiting_room_path %>";
+  </script>
+<% else %>
+  <div class="registration-form">
+    <h2>Register</h2>
+    <%= form_with(model: @user, url: lobby_create_path, method: :post) do |form| %>
+      <div class="field">
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_confirmation %>
+        <%= form.password_field :password_confirmation %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Register" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="login-form">
+    <h2>Login</h2>
+    <%= form_with(url: lobby_login_path, method: :post) do |form| %>
+      <div class="field">
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Login" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
