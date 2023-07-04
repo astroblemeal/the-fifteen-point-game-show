@@ -1,28 +1,5 @@
-<<<<<<< HEAD
+
 # the-fifteen-point-game-show
-=======
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+I'm the creator and host of this show.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
->>>>>>> d204269 (stuff)
