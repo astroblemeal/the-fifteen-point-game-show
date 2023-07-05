@@ -14,12 +14,17 @@ class WaitingRoomController < ApplicationController
   end
 
   def enter_waiting_list
-    redis.lpush('waiting_list', current_user.id)
+    redis.lpush('waiting_list', @current_user.id)
   end
 
   def exit_waiting_list
-    redis.lrem('waiting_list', 0, current_user.id)
-    exit_waiting_list
+
+
+puts "OKOKOKOK #{@current_user.id}"
+   # userId = params[:userId]
+   # redis.lrem('waiting_list', 0, userId)
+
+    render json: { message: "Exited waiting list successfully" }
   end
 
   def clear_waiting_list
