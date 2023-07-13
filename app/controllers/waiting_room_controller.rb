@@ -10,8 +10,6 @@ class WaitingRoomController < ApplicationController
     if !@waiting_list.include?(@current_user.id.to_s)
       enter_waiting_list
     end
-
-    retrieve_waiting_list
   end
 
   def enter_waiting_list
@@ -23,19 +21,6 @@ class WaitingRoomController < ApplicationController
     redis.lrem('waiting_list', 0, userId)
 
     render json: { message: "Exited waiting list successfully" }
-  end
-
-  def clear_waiting_list
-    redis.del('waiting_list')
-    render json: { waitingListCount: @waiting_list_count }
-  end
-
-  def retrieve_waiting_list
-    waiting_list = redis.lrange('waiting_list', 0, -1)
-
-    waiting_list.each do |user_id|
-    user = User.find(user_id)
-    end
   end
 
   private

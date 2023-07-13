@@ -11,29 +11,5 @@
 
     <h2>Logged in as <%= current_user.email %></h2>
     <h2>Waiting_list <span data-leave-page-target="waitingListCount"><%= @waiting_list_count %></span></h2>
-
-    <button data-action="click->leave-page#clearWaitingList">Clear Waiting List</button>
-  </div>
-
-  <script>
-    const application = Stimulus.Application.start();
-
-    application.register("leave-page", class extends Stimulus.Controller {
-      static get targets() {
-        return ["waitingListCount"];
-      }
-
-      clearWaitingList() {
-        fetch("/clear_waiting_list")
-          .then(response => response.json())
-          .then(data => {
-            this.waitingListCountTarget.innerText = data.waitingListCount;
-          })
-          .catch(error => {
-            console.error("Error:", error);
-          });
-      }
-    });
-  </script>
 </body>
 </html>
