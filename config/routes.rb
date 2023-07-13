@@ -6,9 +6,11 @@ Rails.application.routes.draw do
   post '/waiting_room/exit_waiting_list', to: 'waiting_room#exit_waiting_list'
 
   namespace :admin do
-    resources :game, only: [:index] do
-      post :start_game_session, on: :collection
-      get :clear_waiting_list, on: :collection
+    constraints(->(request) { request.session[:user_id] && User.find(request.session[:user_id]).admin? }) do
+      resources :game, only: [:index] do
+        post :start_game_session, on: :collection
+        get :clear_waiting_list, on: :collection
+      end
     end
   end
 
