@@ -9,10 +9,11 @@ class Admin::GameController < ApplicationController
     User.where(id: waiting_list_ids).pluck(:id, :email)
   end
 
-def clear_waiting_list
-  redis.del('waiting_list')
-  render json: { waitingListCount: @waiting_list_count }
-end
+  def clear_waiting_list
+    redis.del('waiting_list')
+    render json: { waitingListCount: @waiting_list_count }
+  end
+
   def start_game_session
     redirect_to game_session_path
   end

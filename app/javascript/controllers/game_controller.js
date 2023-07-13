@@ -17,4 +17,8 @@ export default class extends Controller {
         console.error("Error:", error);
       });
   }
+
+  startGameSession(event) {
+    console.log("START THE GAEMMMMEE")
+  }
 }

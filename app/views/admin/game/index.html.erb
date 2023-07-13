@@ -1,6 +1,5 @@
-<h2>Waiting List</h2>
-<div data-controller="waiting-list">
-  <h2>Waiting_list <span data-waiting-list-target="waitingListCount"><%= @waiting_list_count %></span></h2>
+<div data-controller="game">
+  <h2>Waiting_list count: <span data-waiting-list-target="waitingListCount"><%= @waiting_list_count %></span></h2>
 
   <table>
     <thead>
@@ -9,6 +8,7 @@
         <th>Email</th>
       </tr>
     </thead>
+
     <tbody>
       <% @waiting_list.each do |id, email| %>
         <tr>
@@ -19,6 +19,8 @@
     </tbody>
   </table>
 
-  <button data-action="click->waiting-list#clearWaitingList">Clear Waiting List</button>
+    <button data-action="click->game#clearWaitingList">Clear Waiting List</button>
+    <button data-action="click->game#startGameSession">Start game session</button>
+
   </div>
 </div>
