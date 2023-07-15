@@ -19,8 +19,21 @@
     </tbody>
   </table>
 
-    <button data-action="click->game#clearWaitingList">Clear Waiting List</button>
-<button data-controller="game" data-action="click->game#start">Start Game Session</button>
+  <form data-controller="game" data-action="submit->game#startGameSession">
+    <div>
+      <label for="game_name">Name of the Game:</label>
+      <input type="text" id="game_name" name="game_name" required>
+    </div>
 
+    <% (1..5).each do |i| %>
+      <div>
+        <label for="question_<%= i %>">Question <%= i %> :</label>
+        <input type="text" id="question_<%= i %>" name="questions[]" required>
+        <input type="text" id="answer_<%= i %>" name="answers[]" required>
+      </div>
+    <% end %>
+
+    <button type="submit">Start Game</button>
+  </form>
   </div>
 </div>
