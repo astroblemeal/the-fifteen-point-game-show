@@ -15,7 +15,15 @@ class Admin::GameController < ApplicationController
   end
 
   def start_game_session
-    redirect_to game_session_path
+    waiting_list = retrieve_waiting_list
+
+    #TODOs
+
+    # Redirect users to game path and start game session
+
+    # Ceate a new game session
+
+    clear_waiting_list
   end
 
   private

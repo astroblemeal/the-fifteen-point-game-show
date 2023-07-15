@@ -18,7 +18,12 @@ export default class extends Controller {
       });
   }
 
-  startGameSession(event) {
-    console.log("START THE GAEMMMMEE")
+  startGameSession() {
+    console.log("startGameSession");
+
+    fetch("/admin/game/start_game_session", { method: "POST" })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 }

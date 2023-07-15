@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def authorize_admin
+def authorize_admin
     unless current_user && current_user.admin?
       redirect_to root_path
     end
