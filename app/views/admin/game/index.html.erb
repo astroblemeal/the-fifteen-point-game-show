@@ -1,5 +1,6 @@
 <div data-controller="game">
   <h2>Waiting_list count: <span data-game-target="waitingListCount"><%= @waiting_list_count %></span></h2>
+  <button data-action="click->game#clearWaitingList">Clear Waiting List</button>
 
   <table>
     <thead>
@@ -19,21 +20,95 @@
     </tbody>
   </table>
 
-  <form data-controller="game" data-action="submit->game#startGameSession">
-    <div>
-      <label for="game_name">Name of the Game:</label>
-      <input type="text" id="game_name" name="game_name" required>
-    </div>
-
-    <% (1..5).each do |i| %>
-      <div>
-        <label for="question_<%= i %>">Question <%= i %> :</label>
-        <input type="text" id="question_<%= i %>" name="questions[]" required>
-        <input type="text" id="answer_<%= i %>" name="answers[]" required>
+  <div class="form-container">
+    <form data-controller="game" data-action="submit->game#startGameSession">
+      <div class="input-group">
+        <label for="game_name">Name:</label>
+        <br>
+        <input type="text" id="game_name" name="game_name" required>
       </div>
-    <% end %>
 
-    <button type="submit">Start Game</button>
-  </form>
+      <% (1..5).each do |i| %>
+        <div class="input-group">
+          <label for="question_<%= i %>">Question <%= i %> :</label>
+          <br>
+          <textarea id="question_<%= i %>" name="questions[]" required></textarea>
+        </div>
+        <div class="input-group">
+          <label for="answer_<%= i %>">Answer <%= i %> :</label>
+          <br>
+          <input type="text" id="answer_<%= i %>" name="answers[]" required>
+        </div>
+      <% end %>
+
+      <div class="submit-button">
+        <button type="submit">Start Game</button>
+      </div>
+    </form>
   </div>
 </div>
+
+<style>
+  /* Styles for input fields, buttons, and tables */
+  input[type="text"],
+  textarea,
+  button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 80px;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f1f1f1;
+  }
+
+  /* Styles for input group labels */
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* Styles for form container */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  /* Styles for submit button */
+  .submit-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+</style>
