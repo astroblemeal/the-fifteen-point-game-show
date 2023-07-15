@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Waiting room</title>
-  <!-- Include Stimulus and your JavaScript file -->
-  <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>
-</head>
-<body>
   <div data-controller="leave-page" data-leave-page-user-id="<%= current_user.id %>">
     <h1>WaitingRoom#index</h1>
 
     <h2>Logged in as <%= current_user.email %></h2>
     <h2>Waiting_list <span data-game-target="waitingListCount"><%= @waiting_list_count %></span></h2>
   </div>
-</body>
-</html>

@@ -17,15 +17,10 @@ class Admin::GameController < ApplicationController
   def start_game_session
     waiting_list = retrieve_waiting_list
 
-    # Log the form data
     puts "Game Name: #{params[:game_name]}"
     puts "Questions: #{params[:questions]}"
     puts "Answers: #{params[:answers]}"
 
-    # Redirect users to the game path and start the game session
-    redirect_to game_path(game_session)
-
-    # Clear the waiting list
     clear_waiting_list
   end
 
