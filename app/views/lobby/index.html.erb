@@ -5,46 +5,91 @@
     window.location.href = "<%= waiting_room_path %>";
   </script>
 <% else %>
-  <div class="registration-form">
-    <h2>Register</h2>
-    <%= form_with(model: @user, url: lobby_create_path, method: :post) do |form| %>
-      <div class="field">
-        <%= form.label :email %>
-        <%= form.email_field :email %>
-      </div>
+  <div class="forms-container">
+    <div class="login-form">
+      <h2>Login</h2>
+      <%= form_with(url: lobby_login_path, method: :post) do |form| %>
+        <div class="input-group">
+          <%= form.label :email %>
+          <%= form.email_field :email %>
+        </div>
 
-      <div class="field">
-        <%= form.label :password %>
-        <%= form.password_field :password %>
-      </div>
+        <div class="input-group">
+          <%= form.label :password %>
+          <%= form.password_field :password %>
+        </div>
 
-      <div class="field">
-        <%= form.label :password_confirmation %>
-        <%= form.password_field :password_confirmation %>
-      </div>
+        <div class="actions">
+          <%= form.submit "Login" %>
+        </div>
+      <% end %>
+    </div>
 
-      <div class="actions">
-        <%= form.submit "Register" %>
-      </div>
-    <% end %>
-  </div>
+    <div class="registration-form">
+      <h2>Register</h2>
+      <%= form_with(model: @user, url: lobby_create_path, method: :post) do |form| %>
+        <div class="input-group">
+          <%= form.label :email %>
+          <%= form.email_field :email %>
+        </div>
 
-  <div class="login-form">
-    <h2>Login</h2>
-    <%= form_with(url: lobby_login_path, method: :post) do |form| %>
-      <div class="field">
-        <%= form.label :email %>
-        <%= form.email_field :email %>
-      </div>
+        <div class="input-group">
+          <%= form.label :password %>
+          <%= form.password_field :password %>
+        </div>
 
-      <div class="field">
-        <%= form.label :password %>
-        <%= form.password_field :password %>
-      </div>
+        <div class="input-group">
+          <%= form.label :password_confirmation %>
+          <%= form.password_field :password_confirmation %>
+        </div>
 
-      <div class="actions">
-        <%= form.submit "Login" %>
-      </div>
-    <% end %>
+        <div class="actions">
+          <%= form.submit "Register" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
+
+<style>
+  .forms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .input-group label {
+    margin-bottom: 5px;
+  }
+
+  /* Styles for input fields */
+  input[type="email"],
+  input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 300px;
+  }
+
+  /* Styles for buttons */
+  input[type="submit"] {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
