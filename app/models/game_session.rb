@@ -4,6 +4,8 @@ class GameSession < ApplicationRecord
   serialize :questions, Array
   serialize :player_ids, Array
 
+  has_many :players
+
   validates :game_name, presence: true
   validates :questions, presence: true
   validates :answers, presence: true
