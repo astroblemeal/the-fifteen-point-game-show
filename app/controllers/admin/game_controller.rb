@@ -1,4 +1,6 @@
 class Admin::GameController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     @waiting_list_count = redis.llen('waiting_list')
     @waiting_list = retrieve_waiting_list
@@ -17,11 +19,23 @@ class Admin::GameController < ApplicationController
   def start_game_session
     waiting_list = retrieve_waiting_list
 
-    puts "Game Name: #{params[:game_name]}"
-    puts "Questions: #{params[:questions]}"
-    puts "Answers: #{params[:answers]}"
+    game_name = params[:game_name]
+    questions = params[:questions]
+    answers = params[:answers]
+    player_ids = retrieve_waiting_list
 
-    clear_waiting_list
+    @game_session = @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers, player_ids: player_ids)
+
+    if @game_session.save
+      puts "GAME SESSION SAVED!"
+      # clear_waiting_list
+
+      # Redirect users to game session page
+      # redirect_to game_session_path(@game_session)
+    else
+      puts "GAME SESSION DIDN'T SAVE!"
+    end
+
   end
 
   private
