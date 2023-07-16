@@ -5,8 +5,8 @@
   <p><%= @game_name %></p>
 
   <h2>Player IDs:</h2>
-  <% @player_ids.each do |player_id| %>
-    <p><%= player_id %></p>
+  <% @players.each do |player_id| %>
+    <p><%= player_id.id %></p>
   <% end %>
 
   <h2>Questions:</h2>

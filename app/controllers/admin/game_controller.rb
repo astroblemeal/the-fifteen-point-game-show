@@ -13,7 +13,6 @@ class Admin::GameController < ApplicationController
 
   def clear_waiting_list
     redis.del('waiting_list')
-    render json: { waitingListCount: @waiting_list_count }
   end
 
   def start_game_session
@@ -22,12 +21,16 @@ class Admin::GameController < ApplicationController
     game_name = params[:game_name]
     questions = params[:questions]
     answers = params[:answers]
-    player_ids = retrieve_waiting_list
 
-    @game_session = @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers, player_ids: player_ids)
+    players = waiting_list.map { |user_id, email| Player.new(user_id: user_id, email: email) }
+
+    @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
 
     if @game_session.save
-      # clear_waiting_list
+      @game_session.players = players
+      @game_session.save
+
+      clear_waiting_list
 
       # TODO:  Redirect users to game session page
       # redirect_to game_session_path(@game_session)

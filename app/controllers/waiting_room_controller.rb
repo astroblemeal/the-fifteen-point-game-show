@@ -5,7 +5,7 @@ class WaitingRoomController < ApplicationController
   def index
     @current_user = User.find_by(id: session[:user_id])
     @waiting_list = redis.lrange('waiting_list', 0, -1)
-    @waiting_list_count = redis.llen('waiting_list') + 1
+    @waiting_list_count = redis.llen('waiting_list')
 
     if !@waiting_list.include?(@current_user.id.to_s)
       enter_waiting_list

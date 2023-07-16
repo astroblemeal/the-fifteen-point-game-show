@@ -1,9 +1,10 @@
 class GameSessionsController < ApplicationController
   def show
     @game_session = GameSession.find(params[:id])
-    @player_ids = @game_session.player_ids
+    @players = @game_session.players
     @game_name = @game_session.game_name
-    @questions = @game_session.questions
+    @questions = JSON.parse(@game_session.questions)
+    @answers = JSON.parse(@game_session.answers)
     @created_at = @game_session.created_at
   end
 end
