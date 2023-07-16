@@ -1,0 +1,62 @@
+  /* Styles for input fields, buttons, and tables */
+  input[type="text"],
+  textarea,
+  button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 80px;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f1f1f1;
+  }
+
+  /* Styles for input group labels */
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* Styles for form container */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+
+  /* Styles for submit button */
+  .submit-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }

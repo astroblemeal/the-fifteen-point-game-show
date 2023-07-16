@@ -1,19 +1,19 @@
+<h1>Live Game Session</h1>
 
-  <h1>Live Game Session</h1>
-  <div>
-    <h2>Game Name:</h2>
-    <p><%= @game_name %></p>
+<div class="game-session-details">
+  <h2>Game Name:</h2>
+  <p><%= @game_name %></p>
 
-    <h2>Player IDs:</h2>
-    <% @player_ids.each do |player_id| %>
-      <p><%= player_id %></p>
-    <% end %>
+  <h2>Player IDs:</h2>
+  <% @player_ids.each do |player_id| %>
+    <p><%= player_id %></p>
+  <% end %>
 
-    <h2>Questions:</h2>
-    <% @questions.each do |question| %>
-      <p><%= question %></p>
-    <% end %>
+  <h2>Questions:</h2>
+  <% @questions.each do |question| %>
+    <p><%= question %></p>
+  <% end %>
 
-    <h2>Created At:</h2>
-    <p><%= @created_at %></p>
-  </div>
+  <h2>Created At:</h2>
+  <p><%= @created_at %></p>
+</div>
