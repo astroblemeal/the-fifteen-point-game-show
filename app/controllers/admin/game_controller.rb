@@ -27,15 +27,11 @@ class Admin::GameController < ApplicationController
     @game_session = @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers, player_ids: player_ids)
 
     if @game_session.save
-      puts "GAME SESSION SAVED!"
       # clear_waiting_list
 
-      # Redirect users to game session page
+      # TODO:  Redirect users to game session page
       # redirect_to game_session_path(@game_session)
-    else
-      puts "GAME SESSION DIDN'T SAVE!"
     end
-
   end
 
   private
