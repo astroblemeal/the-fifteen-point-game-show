@@ -2,28 +2,21 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    const userId = this.data.get("userId");
-
-    window.addEventListener('beforeunload', () => this.leaveWaitingList(userId));
+    window.addEventListener('beforeunload', () => this.leaveWaitingList());
   }
 
-  leaveWaitingList(userId) {
-    fetch('/waiting_room_controller/exit_waiting_list', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: userId })
-    })
-      .then(response => response.json())
-      .then(data => {
-
-        console.log(data);
+  leaveWaitingList() {
+    fetch("/waiting_room_controller/exit_waiting_list")
+      .then((response) => response.json())
+      .then((data) => {
+        this.waitingListCountTarget.innerText = data.waitingListCount;
       })
-      .catch(error => {
-        console.error(error);
-      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   disconnect() {
-    window.removeEventListener('beforeunload', this.leaveWaitingList);
+    window.removeEventListener("beforeunload", this.leaveWaitingList);
   }
 }

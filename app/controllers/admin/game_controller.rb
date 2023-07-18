@@ -22,7 +22,7 @@ class Admin::GameController < ApplicationController
     questions = params[:questions]
     answers = params[:answers]
 
-    players = waiting_list.map { |user_id, email| Player.new(user_id: user_id, email: email) }
+    players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
 
     @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
 
@@ -32,8 +32,14 @@ class Admin::GameController < ApplicationController
 
       clear_waiting_list
 
-      # TODO:  Redirect users to game session page
-      # redirect_to game_session_path(@game_session)
+      puts "PARAMS IDDD: #{params[:id]}}"
+
+      render json: { sessionId:  params[:id]}
+    else
+      message = @game_session.errors.full_messages.join(", ")
+      puts "Error starting game session: #{message}"
+
+      render json: { success: false }
     end
   end
 

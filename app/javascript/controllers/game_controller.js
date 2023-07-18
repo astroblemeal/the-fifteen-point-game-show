@@ -35,9 +35,17 @@ export default class extends Controller {
         answers: answers,
       }),
     })
-      .then((response) => response.json())
-      .catch((error) => {
-        console.log("Error:", error);
+      .then(response => response.json())
+      .then(data => {
+        const gameSessionPath = "/game_sessions/" + data.sessionId;
+        window.location.href = gameSessionPath;
+      })
+      .catch(error => {
+        console.error("Error:", error);
       });
   }
+
+
+
+
 }

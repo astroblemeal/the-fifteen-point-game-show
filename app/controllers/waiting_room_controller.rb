@@ -7,7 +7,7 @@ class WaitingRoomController < ApplicationController
     @waiting_list = redis.lrange('waiting_list', 0, -1)
     @waiting_list_count = redis.llen('waiting_list')
 
-    if !@waiting_list.include?(@current_user.id.to_s)
+    unless @waiting_list.include?(@current_user.id.to_s) || @current_user.admin?
       enter_waiting_list
     end
   end
@@ -17,7 +17,7 @@ class WaitingRoomController < ApplicationController
   end
 
   def exit_waiting_list
-    userId = params[:userId].to_s
+    userId = @current_user.id
     redis.lrem('waiting_list', 0, userId)
 
     render json: { message: "Exited waiting list successfully" }

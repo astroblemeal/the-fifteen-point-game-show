@@ -6,7 +6,6 @@ class LobbyController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Registration successful"
       redirect_to root_path
     else
       render 'index'
@@ -17,10 +16,8 @@ class LobbyController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      flash[:success] = "Login successful"
-      redirect_to root_path
+      redirect_to waiting_room_index_path(user_id: user.id)
     else
-      flash.now[:error] = "Invalid email or password"
       render 'index'
     end
   end
