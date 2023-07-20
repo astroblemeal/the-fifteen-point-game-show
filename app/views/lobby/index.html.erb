@@ -2,7 +2,7 @@
 
 <% if current_user %>
  <script type="text/javascript">
-    window.location.href = "<%= waiting_room_path %>";
+    window.location.href = "<%= waiting_room_path({ user_id: @current_user.id }) %>";
   </script>
 <% else %>
   <div class="forms-container">
