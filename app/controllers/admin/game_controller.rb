@@ -13,20 +13,15 @@ class Admin::GameController < ApplicationController
     questions = params[:questions]
     answers = params[:answers]
 
-    game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
+    game_session = GameSession.create_with_players(waiting_list, game_name: game_name, questions: questions, answers: answers)
 
-    if game_session.save
-      game_session.save_with_players(waiting_list)
-
+    if game_session.persisted?
       clear_waiting_list
-
       render json: { sessionId: game_session.id, success: true }
-
       redis.set('game_session', game_session.id)
     else
       message = game_session.errors.full_messages.join(", ")
-      puts "Error starting game session: #{message}"
-
+      puts "Error starting game session with players: #{message}"
       render json: { success: false }
     end
   end
