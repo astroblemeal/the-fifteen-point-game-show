@@ -12,7 +12,7 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
         this.waitingListCountTarget.innerText = data.waitingListCount;
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -21,8 +21,7 @@ export default class extends Controller {
 
   pollGameSessionStatus() {
     setInterval(() => {
-      console.log("poll")
-      fetch("/admin/game/poll_game_session_status")
+      fetch("/poll_game_session_status")
         .then((response) => response.json())
         .then((data) => {
           if (data.exists) {

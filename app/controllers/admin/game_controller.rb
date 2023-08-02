@@ -22,19 +22,22 @@ class Admin::GameController < ApplicationController
     questions = params[:questions]
     answers = params[:answers]
 
-    players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
+    # players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
 
-    @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
+    game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
 
-    if @game_session.save
-      @game_session.players = players
-      @game_session.save
+    if game_session.save
+      # @game_session.players = players
+      # @game_session.save
+
+      game_session.save_with_players(waiting_list)
+
 
       clear_waiting_list
 
-      render json: { sessionId: @game_session.id, success: true }
+      render json: { sessionId: game_session.id, success: true }
 
-      redis.set('game_session', @game_session.id)
+      redis.set('game_session', game_session.id)
     else
       message = @game_session.errors.full_messages.join(", ")
       puts "Error starting game session: #{message}"
