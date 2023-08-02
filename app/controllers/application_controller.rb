@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current_user
   helper_method :current_user
-  before_action -> { authorize_admin if admin_path? }
+  # before_action -> { authorize_admin if admin_path? }
 
   private
 

@@ -13,9 +13,6 @@ class Admin::GameController < ApplicationController
 
   def clear_waiting_list
     redis.del('waiting_list')
-    waiting_list_count = redis.llen('waiting_list')
-
-    render json: { waitingListCount: waiting_list_count }
   end
 
   def start_game_session
@@ -25,17 +22,35 @@ class Admin::GameController < ApplicationController
     questions = params[:questions]
     answers = params[:answers]
 
+    players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
+
     @game_session = GameSession.new(game_name: game_name, questions: questions, answers: answers)
 
-    if @game_session.save_with_players(waiting_list)
+    if @game_session.save
+      @game_session.players = players
+      @game_session.save
+
       clear_waiting_list
 
       render json: { sessionId: @game_session.id, success: true }
+
+      redis.set('game_session', @game_session.id)
     else
       message = @game_session.errors.full_messages.join(", ")
       puts "Error starting game session: #{message}"
 
       render json: { success: false }
+    end
+  end
+
+  def poll_game_session_status
+    game_session = redis.get('game_session')
+
+    if game_session
+      render json: { exists: true, url: game_session_url(game_session), success: true }
+      redis.del('game_session')
+    else
+      render json: { exists: false, success: false }
     end
   end
 

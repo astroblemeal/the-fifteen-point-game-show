@@ -3,16 +3,42 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["waitingListCount"];
 
+  connect() {
+    this.pollGameSessionStatus();
+  }
+
   clearWaitingList() {
     fetch("/admin/game/clear_waiting_list")
       .then((response) => response.json())
       .then((data) => {
         this.waitingListCountTarget.innerText = data.waitingListCount;
+        // window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }
+
+  pollGameSessionStatus() {
+    setInterval(() => {
+      console.log("poll")
+      fetch("/admin/game/poll_game_session_status")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.exists) {
+            window.location.href = data.url
+            clearInterval();
+          } else {
+            console.log("Game session doesn't exist yet");
+          }
+        })
+        .catch((error) => {
+          console.error("Error while polling game session status", error);
+          clearInterval();
+        });
+    }, 5000);
+  }
+
 
   startGameSession(event) {
     event.preventDefault();

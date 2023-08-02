@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'lobby/index'
   get '/game_sessions/:id', to: 'game_sessions#show', as: 'game_session'
   get 'waiting_room', to: 'waiting_room#index'
+  get '/admin/game/poll_game_session_status', to: 'admin/game#poll_game_session_status', as: 'admin_poll_game_session_status'
 
   post '/lobby/create', to: 'lobby#create', as: 'lobby_create'
   post '/lobby/login', to: 'lobby#login', as: 'lobby_login'
@@ -15,11 +16,10 @@ Rails.application.routes.draw do
       resources :game, only: [:index] do
         post :start_game_session, on: :collection
         get :clear_waiting_list, on: :collection
+        get :poll_game_session_status, on: :collection
       end
     end
   end
 
   resources :game_sessions, only: [:show]
-
-
 end

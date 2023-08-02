@@ -5,17 +5,18 @@ class GameSession < ApplicationRecord
   validates :questions, presence: true
   validates :answers, presence: true
 
-  def save_with_players(waiting_list)
-    transaction do
-      save && create_players(waiting_list)
-    end
-  end
+  # def save_with_players(waiting_list)
+  #   transaction do
+  #     create_players(waiting_list)
+  #     save
+  #   end
+  # end
 
-  private
+  # private
 
-  def create_players(waiting_list)
-    players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
-    players.each(&:save)
-    self.players = players
-  end
+  # def create_players(waiting_list)
+  #   players = waiting_list.map { |user_id, _| Player.new(user_id: user_id) }
+  #   players.each(&:save)
+  #   self.players = players
+  # end
 end
