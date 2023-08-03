@@ -1,5 +1,9 @@
 <h1>Live Game Session</h1>
 
+<% if @current_user.admin? %>
+    <p>Admin stuff</p>
+  <% end %>
+
 <div class="game-session-details">
   <h2>Game Name:</h2>
   <p><%= @game_name %></p>

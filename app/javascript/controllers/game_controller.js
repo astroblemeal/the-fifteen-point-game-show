@@ -10,8 +10,7 @@ export default class extends Controller {
   clearWaitingList() {
     fetch("/admin/game/clear_waiting_list")
       .then((response) => response.json())
-      .then((data) => {
-        this.waitingListCountTarget.innerText = data.waitingListCount;
+      .then(() => {
         window.location.reload();
       })
       .catch((error) => {
@@ -61,12 +60,8 @@ export default class extends Controller {
       }),
     })
       .then(response => response.json())
-      .then(data => {
-        const gameSessionPath = "/game_sessions/" + data.sessionId;
-        window.location.href = gameSessionPath;
-      })
       .catch(error => {
-        console.error("Error:", error);
-      })
+          console.error("Error:", error);
+        })
   }
 }

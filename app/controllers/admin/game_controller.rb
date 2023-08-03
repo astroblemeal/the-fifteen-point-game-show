@@ -16,25 +16,31 @@ class Admin::GameController < ApplicationController
     game_session = GameSession.create_with_players(waiting_list, game_name: game_name, questions: questions, answers: answers)
 
     if game_session.persisted?
-      clear_waiting_list
-      render json: { sessionId: game_session.id, success: true }
+      redis.del('waiting_list')
       redis.set('game_session', game_session.id)
-    else
-      message = game_session.errors.full_messages.join(", ")
-      puts "Error starting game session with players: #{message}"
-      render json: { success: false }
     end
+
+    render json: { success: true }
   end
 
   def poll_game_session_status
-    game_session = get_game_session
+    game_session = redis.get('game_session')
 
     if game_session
       render json: { exists: true, url: game_session_url(game_session), success: true }
-      clear_game_session
     else
       render json: { exists: false, success: false }
     end
+  end
+
+  def clear_waiting_list
+    redis.del('waiting_list')
+    render json: { message: "Cleared waiting list successfully" }
+  end
+
+  def clear_game_session
+    redis.del('game_session')
+    render json: { message: "Cleared game session successfully" }
   end
 
   private
@@ -42,14 +48,6 @@ class Admin::GameController < ApplicationController
   def retrieve_waiting_list
     waiting_list_ids = redis.lrange('waiting_list', 0, -1)
     User.where(id: waiting_list_ids).pluck(:id, :email)
-  end
-
-  def clear_waiting_list
-    redis.del('waiting_list')
-  end
-
-  def clear_game_session
-    redis.del('game_session')
   end
 
   def get_game_session
