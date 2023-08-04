@@ -15,21 +15,23 @@ class GameSessionsController < ApplicationController
     render json: { message: "Cleared game session successfully" }
   end
 
-  def questions_separator
-    game_session = GameSession.find(params[:id])
-    questions = JSON.parse(game_session.questions)
+def questions_separator
+  game_session = GameSession.find(params[:id])
+  questions = JSON.parse(game_session.questions)
 
-    question_number = params[:question_number].to_i
-    return render json: { error: 'Invalid question number' }, status: :bad_request unless (1..questions.length).include?(question_number)
+  question_number = params[:question_number].to_i
+  return render json: { error: 'Invalid question number' }, status: :bad_request unless (1..questions.length).include?(question_number)
 
-    question = questions[question_number - 1]
-    separated_question = {
-      "question_number" => question_number,
-      "question" => question
-    }
+  question = questions[question_number - 1]
+  separated_question = {
+    question_number: question_number,
+    question: question
+  }
 
-    render json: separated_question
-  end
+  ActionCable.server.broadcast("game_session_#{params[:id]}", separated_question)
+
+  render json: { message: "Fetched question successfully" }
+end
 
   private
 

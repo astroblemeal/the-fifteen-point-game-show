@@ -2,7 +2,7 @@
 <div data-controller="game-sessions" data-game-session-id="<%= @game_session_id %>">
   <% if @current_user.admin? %>
       <p>Admin stuff</p>
-      <button id="clear-game-session">Clear Game Session</button>
+      <button data-action="click->game-sessions#stopGameSession">Clear Game Session</button>
       <button data-action="click->game-sessions#fetchQuestion">Fetch Question</button>
       <input type="number" placeholder="Question Number" data-game-sessions-target="questionNumber">
   <% end %>
