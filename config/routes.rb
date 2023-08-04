@@ -16,11 +16,13 @@ Rails.application.routes.draw do
       resources :game, only: [:index] do
         post :start_game_session, on: :collection
         get :clear_waiting_list, on: :collection
+        # get :clear_game_session on: :collection
       end
     end
   end
 
   resources :game_sessions, only: [:show] do
     get :clear_game_session, on: :member
+    get :questions_separator, on: :member
   end
 end

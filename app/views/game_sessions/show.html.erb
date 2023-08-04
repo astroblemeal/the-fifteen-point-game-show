@@ -1,10 +1,11 @@
 <h1>Live Game Session</h1>
-<div data-controller="game-sessions">
-<% if @current_user.admin? %>
-    <p>Admin stuff</p>
-      <button id="clear-game-session" data-game-session-id="<%= @game_session_id %>">Clear Game Session</button>
+<div data-controller="game-sessions" data-game-session-id="<%= @game_session_id %>">
+  <% if @current_user.admin? %>
+      <p>Admin stuff</p>
+      <button id="clear-game-session">Clear Game Session</button>
+      <button data-action="click->game-sessions#fetchQuestion">Fetch Question</button>
+      <input type="number" placeholder="Question Number" data-game-sessions-target="questionNumber">
   <% end %>
-
 <div class="game-session-details">
   <h2>Game Name:</h2>
   <p><%= @game_name %></p>
@@ -15,9 +16,9 @@
   <% end %>
 
   <h2>Questions:</h2>
-  <% @questions.each do |question| %>
-    <p><%= question %></p>
-  <% end %>
+  <h2 id="current-question-number"></h2>
+   <h1 id="current-question"></h1>
+
 
   <h2>Created At:</h2>
   <p><%= @created_at %></p>

@@ -33,14 +33,14 @@ class Admin::GameController < ApplicationController
     end
   end
 
-  def clear_waiting_list
-    redis.del('waiting_list')
-    render json: { message: "Cleared waiting list successfully" }
-  end
-
   def clear_game_session
     redis.del('game_session')
     render json: { message: "Cleared game session successfully" }
+  end
+
+  def clear_waiting_list
+    redis.del('waiting_list')
+    render json: { message: "Cleared waiting list successfully" }
   end
 
   private
